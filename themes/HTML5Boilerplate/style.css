@@ -1,0 +1,151 @@
+/* Define html5 elements
+--------------------------------------------------------
+*/
+@import "main.css";
+
+
+/* General */
+html 
+{
+	background: #cc6666;
+	overflow-y: scroll;
+}
+
+body 
+{
+  font-family: Georgia, serif;
+}
+
+
+/**
+ * Navbar
+ */
+#navbar 
+{
+	padding: 0.2em 1em 0 1em;
+	background: #ffcc99;
+	border-bottom: 2px solid #999999;
+}
+#navbar a 
+{	
+	padding: 0.3em 1em 0 1em;
+	color: #555555;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-decoration: none;
+}
+#navbar a:hover,
+#navbar a.selected
+{
+	color: #111111; 
+	background: #999999;
+}
+
+
+
+/* Header */
+/* the header with navigation to related links */
+/* set width and center page */
+
+#above{
+	margin: -10px -10px 0 -10px;
+	padding: 0.2em 0 1em 0;
+	background: #ffffcc;
+	background: -webkit-gradient(linear, left, right, from(#ffffcc), to(#cc6666)); 
+	background: -moz-linear-gradient(top,  #ffffcc,  #cc6666);
+	
+	-webkit-border-bottom-right-radius: 30px;
+	-webkit-border-bottom-left-radius: 30px;
+	-moz-border-radius-bottomright: 30px;
+	-moz-border-radius-bottomleft: 30px;
+	border-bottom-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+
+#nav-kmom a 
+{
+	font: italic 0.8em Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color: #999999;
+}
+#nav-kmom  a:hover
+{ 
+	text-decoration:underline;  
+	color: #333333; 
+}
+#nav-kmom a.selected
+{
+	background:hsla(0, 0%, 52%, 0.1); 
+	border:2px solid #858585;
+}
+
+
+
+
+#header{
+	margin:0 auto; 
+	width: 950px;
+	overflow: hidden;
+}
+#header a{margin:0 auto;}
+
+
+
+#main{
+	background: #ffffcc;
+	margin:auto;
+	width:950px;
+	padding:1em 1em 1em 1em;
+}
+/* add common padding to main content block */
+#main{overflow:auto;} /* clearer-fix, see the guide for css20 */
+
+#main figure{float: right;}
+
+/* Byline */
+#byline{
+	clear: both;
+	border-top: 1px dashed #999999;
+	margin-top: 2em;
+	padding: 1em 1em 1em 1em;
+	width:80%;
+	background: #ffffcc;
+	font-style: italic;
+}
+
+#bylineDiv{
+	width:300px;
+	font-size: smaller
+}
+
+#bylineDiv img{
+	padding:2px;
+	outline:#999999 groove 1px;
+	float: right;
+}
+
+/* Footer */
+#footer{
+	padding: 1em 1em 1em 1em;
+	width:950px;
+	margin:auto;
+	background: #ffffcc;
+	
+	-webkit-border-bottom-right-radius: 30px;
+	-webkit-border-bottom-left-radius: 30px;
+	-moz-border-radius-bottomright: 30px;
+	-moz-border-radius-bottomleft: 30px;
+	border-bottom-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+
+#footer a {
+  font: italic 0.8em Arial, Helvetica, sans-serif;
+  text-decoration:none;
+  color: #999999;
+}
+#footer a:hover
+{ 
+	text-decoration:underline;  
+	color: #333333; 
+}
+/* end */
