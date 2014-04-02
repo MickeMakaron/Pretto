@@ -4,15 +4,23 @@
 *
 * @package PrettoCore
 */
-class CCIndex implements IController 
+class CCindex implements IController 
 {
 	/**
 	* Implementing interface IController. All controllers must have an index action.
 	*/
-	public function Index() 
+	public function index() 
 	{   
 		global $pr;
-		$pr->data['title'] = "The Index Controller";
+		$pr->config['theme']['name'] = 'core';
+		
+		$pr->data['title'] = "The index Controller";
+		
+		$pr->data['above'] = null;
+		$pr->data['main'] = <<<EOD
+				<p><a href='developer'>developer</a></p>
+				<p><a href='me'>me</a></p>
+EOD;
 	}
 
 } 
