@@ -46,7 +46,7 @@
 	</header>
 
 	<div id="main" role="main">
-		<?=$main?>
+		<?=render_views()?>
 	</div>
 
 	<footer id="footer">

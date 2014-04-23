@@ -21,3 +21,11 @@ body
    background-color:#fff;
    padding: 1em;
 }
+
+/**
+* Form input fields during validation.
+* CFormElement::getHTML()
+*
+*/
+.validation-failed{border:2px solid red;}
+.validation-message{color:red;font-size:smaller;}

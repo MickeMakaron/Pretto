@@ -101,3 +101,25 @@ function current_url()
 {
 	return CPretto::instance()->request->current_url;
 }	
+
+/**
+* Render all views.
+*
+* @param $region string the region to draw the content in.
+*/
+function render_views($region = 'default') 
+{
+	return CPretto::instance()->views->render($region);
+}
+
+/**
+* Create a url to an internal resource.
+*
+* @param string the whole url or the controller. Leave empty for current controller.
+* @param string the method when specifying controller as first argument, else leave empty.
+* @param string the extra arguments to the method, leave empty if not using method.
+*/
+function create_url($urlOrController = null, $method = null, $arguments = null) 
+{
+	return CPretto::instance()->request->createUrl($urlOrController, $method, $arguments);
+}

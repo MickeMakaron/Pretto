@@ -7,7 +7,13 @@
 class CPretto implements ISingleton 
 {
 	private static $instance 	= null;
-	public  $request 			= null;
+	
+	public $request 			= null;
+	public $data				= null;
+	public $db					= null;
+	public $views				= null;
+	public $session				= null;
+	public $user				= null;
 
 	/**
 	* Constructor
@@ -17,14 +23,31 @@ class CPretto implements ISingleton
 		// include the site specific config.php and create a ref to $ly to be used by config.php
 		$pr = &$this;
 		require(PRETTO_SITE_PATH.'/config.php');
+		
+		// Create a database object.
+		if(isset($this->config['database'][0]['dsn']))
+			$this->db = new CDatabase($this->config['database'][0]['dsn']);
+			
+		// Create a container for all views and theme data
+		$this->views = new CViewContainer();
+		
+		// Start a named session
+		session_name($this->config['session_name']);
+		session_start();
+		$this->session = new CSession($this->config['session_key']);
+		$this->session->populateFromSession();
+		
+		// Create a object for the user
+		$this->user = new CMUser($this);
 	}
+
 	
 	
 	/**
 	* Singleton pattern. Get the instance of the latest created object or create a new one.
 	* @return CPretto The instance of this class.
 	*/
-	public static function Instance() 
+	public static function instance() 
 	{
 		if(self::$instance == null)
 			self::$instance = new CPretto();
@@ -35,16 +58,15 @@ class CPretto implements ISingleton
 	/**
 	* Frontcontroller, check url and route to controllers.
 	*/
-	public function FrontControllerRoute() 
+	public function frontControllerRoute() 
 	{
 		$this->data['debug']  = "REQUEST_URI - {$_SERVER['REQUEST_URI']}\n";
 		$this->data['debug'] .= "SCRIPT_NAME - {$_SERVER['SCRIPT_NAME']}\n";
 		
 		// Step 1
 		// Take current url and divide it in controller, method and parameters
-		echo $this->config['url_type'];
 		$this->request = new CRequest($this->config['url_type']);
-		$this->request->Init($this->config['base_url']);
+		$this->request->init($this->config['base_url']);
 		
 		$controller = $this->request->controller;
 		$method     = $this->request->method;
@@ -70,10 +92,11 @@ class CPretto implements ISingleton
 			$rc = new ReflectionClass($className);
 			if($rc->implementsInterface('IController')) 
 			{
-				if($rc->hasMethod($method)) 
+				$formattedMethod = str_replace(array('_', '-'), '', $method);
+				if($rc->hasMethod($formattedMethod)) 
 				{
-					$controllerObj	= $rc->newInstance();
-					$methodObj		= $rc->getMethod($method);
+					$controllerObj	= $rc->newinstance();
+					$methodObj		= $rc->getMethod($formattedMethod);
 					
 					$methodObj->invokeArgs($controllerObj, $arguments);
 				} 
@@ -92,26 +115,104 @@ class CPretto implements ISingleton
 	/**
 	* Theme Engine Render, renders the views using the selected theme.
 	*/
-	public function ThemeEngineRender() 
+	public function themeEngineRender() 
 	{
+		$this->session->storeInSession();
+		
+		// Is theme enabled?
+		if(!isset($this->config['theme'])) 
+			return;
+		
+		
+		
 		// Get the paths and settings for the theme
-		$themeName	= $this->config['theme']['name'];
-		$themePath	= PRETTO_INSTALL_PATH . "/themes/{$themeName}";
-		$themeUrl 	= $this->request->base_url . "themes/{$themeName}";
+        $themePath  = PRETTO_INSTALL_PATH . '/' . $this->config['theme']['path'];
+        $themeUrl   = $this->request->base_url . $this->config['theme']['path'];
+		
+		// Is there a parent theme?
+		$parentPath = null;
+		$parentUrl = null;
+		if(isset($this->config['theme']['parent'])) 
+		{
+			$parentPath = PRETTO_INSTALL_PATH . '/' . $this->config['theme']['parent'];
+			$parentUrl  = $this->request->base_url . $this->config['theme']['parent'];
+		}
 
-		// Add stylesheet path to the $pr->data array
-		$this->data['stylesheet'] = "{$themeUrl}/style.css";
+        // Add stylesheet name to the $ly->data array
+        $this->data['stylesheet'] = $this->config['theme']['stylesheet'];
+		
+		
+		// Make the theme urls available as part of $pr
+        $this->themeUrl = $themeUrl;
+        $this->themeParentUrl = $parentUrl;
 
+		
+		// Map menu to region if defined
+		if(is_array($this->config['theme']['menu_to_region'])) 
+			foreach($this->config['theme']['menu_to_region'] as $key => $val) 
+				$this->views->addString($this->drawMenu($key), array(null), $val);
+		
+		
+		
+		
+		
 		// Include the global functions.php and the functions.php that are part of the theme
 		$pr = &$this;
-		$functionsPath = "{$themePath}/functions.php";
-		if(is_file($functionsPath))
-			include $functionsPath;
 		
-		// Extract $pr->data to own variables and handover to the template file
-		extract($this->data);     
-		include("{$themePath}/default.tpl.php");
+		// First the default Pretto themes/functions.php
+		include(PRETTO_INSTALL_PATH . '/themes/functions.php');
+		
+		// Then the functions.php from the parent theme
+		if($parentPath && is_file("{$parentPath}/functions.php"))
+			include "{$parentPath}/functions.php";
+		
+		// And last the current theme functions.php
+		if(is_file("{$themePath}/functions.php"))
+			include "{$themePath}/functions.php";
+		
+		// Extract $pr->data and $pr->view->data to own variables and handover to the template file
+		extract($this->data); //DEPRECATED - use $this->views->getData()
+		extract($this->views->getData());
+		
+		// Extract additional data from config file, if set
+		if(isset($this->config['theme']['data']))
+			extract($this->config['theme']['data']);
+
+		
+		// Execute the template file
+		$templateFile = (isset($this->config['theme']['template_file'])) ? $this->config['theme']['template_file'] : 'default.tpl.php';
+		
+		if(is_file("{$themePath}/{$templateFile}")) 
+			include("{$themePath}/{$templateFile}");
+		elseif(is_file("{$parentPath}/{$templateFile}"))
+			include("{$parentPath}/{$templateFile}");
+		else 
+			throw new Exception('No such template file.');
 	}
 	
-	
+	/**
+	* Draw HTML for a menu defined in $pr->config['menus'].
+	*
+	* @param $menu string then key to the menu in the config-array.
+	* @returns string with the HTML representing the menu.
+	*/
+	public function drawMenu($menu) 
+	{
+		$items = null;
+		if(isset($this->config['menus'][$menu])) 
+		{
+			foreach($this->config['menus'][$menu] as $val) 
+			{
+				$selected = null;
+				if($val['url'] == $this->request->query || (!is_null($this->request->routed_from) && $val['url'] == $this->request->routed_from))
+					$selected = " class='selected'";
+
+				$items .= "<li><a {$selected} href='" . $this->request->createUrl($val['url']) . "'>{$val['label']}</a></li>\n";
+			}
+		} 
+		else 
+			throw new Exception('No such menu.');
+			
+		return "<ul class='menu {$menu}'>\n{$items}</ul>\n";
+	}
 }

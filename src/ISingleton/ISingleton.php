@@ -6,5 +6,5 @@
 */
 interface ISingleton 
 {
-	public static function Instance();
+	public static function instance();
 }
