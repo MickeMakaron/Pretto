@@ -21,3 +21,69 @@ function autoload($aClassName)
 
 }
 spl_autoload_register('autoload');
+
+
+/**
+* Set a default exception handler and enable logging in it.
+*/
+function exception_handler($exception) 
+{
+	echo "Pretto: Uncaught exception: <p>" . $exception->getMessage() . "</p><pre>" . $exception->getTraceAsString(), "</pre>";
+}
+set_exception_handler('exception_handler');
+
+
+/**
+* Helper, wrap html_entites with correct character encoding
+*/
+function htmlent($str, $flags = ENT_COMPAT) 
+{
+	return htmlentities($str, $flags, CPretto::instance()->config['character_encoding']);
+}
+
+/**
+* Helper, make clickable links from URLs in text.
+* @deprecated since v0.3.0.1, moved to CTextFilter
+*/
+function makeClickable($text) 
+{
+	return preg_replace_callback
+	(
+		'#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#',
+		create_function
+		(
+			'$matches',
+			'return "<a href=\'{$matches[0]}\'>{$matches[0]}</a>";'
+		),
+		$text
+	);
+}
+
+/**
+* Helper, BBCode formatting converting to HTML.
+*
+* @param string text The text to be converted.
+* @returns string the formatted text.
+*/
+function bbcode2html($text) 
+{
+	$search = array
+	(
+		'/\[b\](.*?)\[\/b\]/is',
+		'/\[i\](.*?)\[\/i\]/is',
+		'/\[u\](.*?)\[\/u\]/is',
+		'/\[img\](https?.*?)\[\/img\]/is',
+		'/\[url\](https?.*?)\[\/url\]/is',
+		'/\[url=(https?.*?)\](.*?)\[\/url\]/is'
+	);   
+	$replace = array
+	(
+		'<strong>$1</strong>',
+		'<em>$1</em>',
+		'<u>$1</u>',
+		'<img src="$1" />',
+		'<a href="$1">$1</a>',
+		'<a href="$1">$2</a>'
+	);     
+	return preg_replace($search, $replace, $text);
+}

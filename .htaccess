@@ -246,10 +246,10 @@ AddDefaultCharset utf-8
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 	# Must use RewriteBase on www.student.bth.se, Rewritebase for url /~mos/test is /~mos/test/
-		RewriteBase /~mihe14/phpmvc/kmom02/
+		RewriteBase /~mihe14/phpmvc/kmom07/
 
 	# add trailing slash if missing
-		RewriteRule ^(([a-z0-9\-]+/)*[a-z0-9\-]+)$ $1/ [NC,R=301,L]
+		#RewriteRule ^(([a-z0-9\-]+/)*[a-z0-9\-]+)$ $1/ [NC,R=301]
 	
 	
 	RewriteCond %{REQUEST_FILENAME} !-f

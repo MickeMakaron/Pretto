@@ -20,7 +20,7 @@
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-	<link rel="stylesheet" href="<?=$stylesheet?>">
+	<link rel="stylesheet" href="<?=create_url($stylesheet)?>">
 
 	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
@@ -46,7 +46,7 @@
 	</header>
 
 	<div id="main" role="main">
-		<?=$main?>
+		<?=render_views()?>
 	</div>
 
 	<footer id="footer">

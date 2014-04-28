@@ -8,16 +8,18 @@ class CRequest
 {
 		private $request_uri	= null;
 		private $script_name	= null;
-		private $query			= null;
 		private $splits         = null;
-		private $current_url	= null;
 		
+		
+		public $current_url		= null;
 		public $defaultUrl		= null;
 		public $querystringUrl	= null;
 		public $controller     	= null;
 		public $method         	= null;
 		public $arguments		= null;
 		public $base_url		= null;
+		public $routed_from		= null;
+		public $query			= null;
 
 
 
@@ -37,31 +39,52 @@ class CRequest
 		$this->defaultUrl		= $urlType == 0 ? true : false;
 		$this->querystringUrl	= $urlType == 2 ? true : false;
 	}
-		
+
+
 	/**
 	* Parse the current url request and divide it in controller, method and arguments.
 	*
 	* Calculates the base_url of the installation. Stores all useful details in $this.
 	*
 	* @param $baseUrl string use this as a hardcoded baseurl.
+	* @param $routing array key/val to use for routing if url matches key.
 	*/
-	public function Init($baseUrl = null) 
+	public function init($baseUrl = null, $routing = null) 
 	{
 		// Take current url and divide it in controller, method and arguments
 		$requestUri = $_SERVER['REQUEST_URI'];
-		$scriptPart = $scriptName = $_SERVER['SCRIPT_NAME'];   
+		$scriptPart = $scriptName = $_SERVER['SCRIPT_NAME'];
+
 
 		// Check if url is in format controller/method/arg1/arg2/arg3
 		if(substr_compare($requestUri, $scriptName, 0, strlen($scriptName)))
 			$scriptPart = dirname($scriptName);
 
-		$query = trim(substr($requestUri, strlen(rtrim($scriptPart, '/'))), '/');   
+			
+		// Set query to be everything after base_url, except the optional querystring
+		$query = trim(substr($requestUri, strlen(rtrim($scriptPart, '/'))), '/');
+		$pos = strcspn($query, '?');
+		if($pos)
+			$query = substr($query, 0, $pos);
+
 		// Check if this looks like a querystring approach link
 		if(substr($query, 0, 1) === '?' && isset($_GET['q']))
 			$query = trim($_GET['q']);
-		
-		$splits = explode('/', $query);
 
+		$routed_from = null;
+		// Check if url matches an entry in routing table
+		if(is_array($routing) && isset($routing[$query]) && $routing[$query]['enabled'])
+		{
+			$routed_from = $query;
+			$query = $routing[$query]['url'];
+		}
+			
+		$splits = explode('/', $query);
+		
+
+	
+		
+		
 		// Set controller, method and arguments
 		$controller =  !empty($splits[0]) ? $splits[0] : 'index';
 		$method     =  !empty($splits[1]) ? $splits[1] : 'index';
@@ -69,7 +92,7 @@ class CRequest
 		unset($arguments[0], $arguments[1]); // remove controller & method part from argument list
 
 		// Prepare to create current_url and base_url
-		$currentUrl = $this->GetCurrentUrl();
+		$currentUrl = $this->getCurrentUrl();
 		$parts       = parse_url($currentUrl);
 		$baseUrl     = !empty($baseUrl) ? $baseUrl : "{$parts['scheme']}://{$parts['host']}" . (isset($parts['port']) ? ":{$parts['port']}" : '') . rtrim(dirname($scriptName), '/');
 
@@ -79,16 +102,16 @@ class CRequest
 		$this->request_uri  = $requestUri;
 		$this->script_name  = $scriptName;
 		$this->query        = $query;
-		$this->splits        = $splits;
-		$this->controller    = $controller;
-		$this->method        = $method;
+		$this->splits		= $splits;
+		$this->controller	= $controller;
+		$this->method		= $method;
 		$this->arguments    = $arguments;
-	}
-
+		$this->routed_from	= $routed_from;
+	}    
 	/**
 	* Get the url to the current page.
 	*/
-	public function GetCurrentUrl() 
+	public function getCurrentUrl() 
 	{
 		$url		= "http";
 		$url	   .= (@$_SERVER["HTTPS"] == "on") ? 's' : '';
@@ -104,15 +127,30 @@ class CRequest
 	* Create a url in the way it should be created.
 	*
 	*/
-	public function CreateUrl($url=null) 
-	{
+	public function createUrl($url = null, $method = null, $arguments = null) 
+	{	
+		// If fully qualified just leave it.
+		if(!empty($url) && (strpos($url, '://') || $url[0] == '/')) 
+			return $url;
+
+		// Get current controller if empty and method or arguments choosen
+		if(empty($url) && (!empty($method) || !empty($arguments)))
+			$url = $this->controller;
+
+		// Get current method if empty and arguments choosen
+		if(empty($method) && !empty($arguments))
+			$method = $this->method;
+	
 		$prepend = $this->base_url;
 		if($this->querystringUrl) 
 			$prepend .= 'index.php?q=';
 		elseif($this->defaultUrl)
 			$prepend .= 'index.php/';
 
-		return $prepend . rtrim($url, '/');
+		$url = trim($url, '/');
+		$method = empty($method) ? null : '/' . trim($method, '/');
+		$arguments = empty($arguments) ? null : '/' . trim($arguments, '/');
+		
+		return $prepend . rtrim("$url$method$arguments", '/');
 	}
-	
 }

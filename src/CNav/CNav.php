@@ -8,10 +8,12 @@ class CNav
 	{
 		$kmoms = self::readDirectoryFolders($dir);
 		$dir = __DIR__;
+		$currentMom = basename($dir);
 		$html = null;
 		foreach($kmoms as $kmom)
 		{
-			$html .= strpos($dir, $kmom) ? "{$kmom}\n" : "<a href='".CPretto::instance()->request->base_url."../{$kmom}'>{$kmom}</a>\n" ;
+			$base = basename($kmom);
+			$html .= strpos($dir, $base) ? "{$base}\n" : "<a href='".CPretto::instance()->request->base_url."../{$base}'>{$base}</a>\n";
 		}
 		
 		return "<nav id='$id'>\n{$html}</nav>\n";
@@ -30,14 +32,14 @@ class CNav
 	}
 	
 	
-	private static function readDirectoryFolders($path) 
+	public static function readDirectoryFolders($path) 
 	{
 		$list = Array();
 		if(is_dir($path) && $dh = opendir($path)) 
 		{
 			while (($folder = readdir($dh)) !== false) 
 				if(is_dir("$path/$folder") && !in_array($folder, array('.htacces','..','.'))) 
-					$list[$folder] = "$folder";
+					$list[$folder] = "$path/$folder";
 				
 			closedir($dh);
 		}
