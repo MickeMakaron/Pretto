@@ -94,7 +94,8 @@ class CCContent extends CObject implements IController
 	public function init() 
 	{
 		$content = new CMContent();
-		$content->init();
+		$res = $content->manage('install');
+		$this->addMessage($res[0], $res[1]);
 		$this->redirectToController();
 	}
 
