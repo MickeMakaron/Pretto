@@ -1,0 +1,1 @@
+<article><h1>Redovisning</h1><?=CGetReport::fromDir(realpath("../"))?></article>
