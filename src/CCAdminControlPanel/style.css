@@ -1,0 +1,13 @@
+.acp-edit-box
+{
+	padding: 1em;
+	border-style:solid;
+	border-width:1px;
+	border-color: #ABA9A6;
+}
+
+textarea
+{
+	width:100%;
+
+}
