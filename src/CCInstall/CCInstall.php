@@ -104,7 +104,8 @@ class CCInstall extends CObject implements IController
 			if($this->install->tryDatabaseConnection($driver, $host, $db, $user, $password))
 			{
 					$this->install->editConfig($driver, $host, $db, $user, $password);
-					$this->createMessage('success', 'Database is up and running! Continue the installation instructions to initialize data.');
+					$this->addMessage('success', 'Database is up and running! Continue the installation instructions to initialize data.');
+					$this->redirectToController();
 			}
 			else
 			{
