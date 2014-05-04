@@ -104,12 +104,15 @@ class CMModules extends CObject
 			$allModules, 
 			function($a, $b)
 			{
+<<<<<<< HEAD
 				if($a == 'CMConfig')
 					return -1;
 				elseif($b == 'CMConfig')
 					return 1;
 					
 			
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 				return ($a == 'CMUser' ? -1 : ($b == 'CMUser' ? 1 : 0));
 			}
         );

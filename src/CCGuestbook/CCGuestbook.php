@@ -41,10 +41,14 @@ class CCGuestbook extends CObject implements IController
 		elseif(isset($_POST['doClear']))
 			$this->guestbookModel->deleteAll();
 		elseif(isset($_POST['doCreate']))
+<<<<<<< HEAD
 		{
 			$res = $this->guestbookModel->manage('install');
 			$this->addMessage($res[0], $res[1]);
 		}
+=======
+			$this->guestbookModel->init();        
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		$this->redirectTo('guestbook');
 	}
 }

@@ -80,20 +80,37 @@ $pr->config['controllers'] = array
 	'blog'		=> array('enabled' => true,'class' => 'CCBlog'),
 	'theme'		=> array('enabled' => true,'class' => 'CCTheme'),
 	'modules'	=> array('enabled' => true,'class' => 'CCModules'),
+<<<<<<< HEAD
 	'my'		=> array('enabled' => true,'class' => 'CCMyController'),
 	'install'	=> array('enabled' => true,'class' => 'CCInstall'),
+=======
+	'my'		=> array('enabled' => true,'class' => 'CCMyController')
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 );
 
 /**
 * Define menus.
 *
+<<<<<<< HEAD
 * Create hardcoded menus and map them to a theme region through $pr->config['theme'].
+=======
+* Create hardcoded menus and map them to a theme region through $ly->config['theme'].
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 */
 $pr->config['menus'] = array
 (
 	'navbar' => array
 	(
+<<<<<<< HEAD
 		 'index'      => array('label'=>'Index', 'url'=>''),
+=======
+		'home'      => array('label'=>'Home', 		'url'=>''),
+		'modules'   => array('label'=>'Modules', 	'url'=>'modules'),
+		'guestbook' => array('label'=>'Guestbook',	'url'=>'guestbook'),
+		'content'   => array('label'=>'Content', 	'url'=>'content'),
+		'blog'      => array('label'=>'Blog', 		'url'=>'blog'),
+		'theme'		=> array('label'=>'Theme',		'url'=>'theme'),
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	),
 );
 
@@ -163,7 +180,11 @@ $pr->config['theme'] = array
 			'logo' => 'pretto.jpg',
 			'logo_width'  => 80,
 			'logo_height' => 80,
+<<<<<<< HEAD
 			'footer' => "&copy; Pretto, self | <a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a>",
+=======
+			'footer' => "<p>&copy; Pretto, self | <a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a></p>",
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		),
 );
 
@@ -187,6 +208,22 @@ $pr->config['database']['default']['db'] = 'mihe14';
 $pr->config['database']['default']['user'] = 'mihe14';
 $pr->config['database']['default']['password'] = '3!A?"Pz6';
 
+
+/**
+* Debug
+*/
+$pr->config['debug'] = array
+(
+	'isOn' => false,
+	'dbNumQueries' => true,
+	'dbQueries' => true
+);
+
+/*
+* Database
+*
+**/
+$pr->config['database'][0]['dsn'] = 'sqlite:' . PRETTO_SITE_PATH . '/data/.ht.sqlite';
 
 /**
 * Debug

@@ -23,6 +23,7 @@ class CPretto implements ISingleton
 		// include the site specific config.php and create a ref to $ly to be used by config.php
 		$pr = &$this;
 		require(PRETTO_SITE_PATH.'/config.php');
+<<<<<<< HEAD
 
 		
 		// Create a database object.
@@ -35,6 +36,12 @@ class CPretto implements ISingleton
 
 			$this->db = CDatabase::instance($this->config['database'][0]['dsn'], $user, $password, $driver_options);
 		}
+=======
+		
+		// Create a database object.
+		if(isset($this->config['database'][0]['dsn']))
+			$this->db = new CDatabase($this->config['database'][0]['dsn']);
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 			
 		// Create a container for all views and theme data
 		$this->views = new CViewContainer();
@@ -145,6 +152,7 @@ class CPretto implements ISingleton
 		if(!isset($this->config['theme'])) 
 			return;
 		
+<<<<<<< HEAD
 		// Override config settings with PrettoConfig table
 		if($this->db)
 		{
@@ -157,6 +165,9 @@ class CPretto implements ISingleton
 				$this->config = array_merge($this->config, $cmconfigData);
 			}
 		}
+=======
+		
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		
 		// Get the paths and settings for the theme
         $themePath  = PRETTO_INSTALL_PATH . '/' . $this->config['theme']['path'];
@@ -171,7 +182,11 @@ class CPretto implements ISingleton
 			$parentUrl  = $this->request->base_url . $this->config['theme']['parent'];
 		}
 
+<<<<<<< HEAD
         // Add stylesheet name to the $pr->data array
+=======
+        // Add stylesheet name to the $ly->data array
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
         $this->data['stylesheet'] = $this->config['theme']['stylesheet'];
 		
 		
@@ -211,6 +226,10 @@ class CPretto implements ISingleton
 		if(isset($this->config['theme']['data']))
 			extract($this->config['theme']['data']);
 
+<<<<<<< HEAD
+=======
+		
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		// Execute the template file
 		$templateFile = (isset($this->config['theme']['template_file'])) ? $this->config['theme']['template_file'] : 'default.tpl.php';
 		
@@ -219,7 +238,11 @@ class CPretto implements ISingleton
 		elseif(is_file("{$parentPath}/{$templateFile}"))
 			include("{$parentPath}/{$templateFile}");
 		else 
+<<<<<<< HEAD
 			throw new Exception("No such template file. Neither {$themePath}/{$templateFile} and {$parentPath}/{$templateFile} is valid.");
+=======
+			throw new Exception('No such template file.');
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	}
 	
 	/**
@@ -230,7 +253,10 @@ class CPretto implements ISingleton
 	*/
 	public function drawMenu($menu) 
 	{
+<<<<<<< HEAD
 
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		$items = null;
 		if(isset($this->config['menus'][$menu])) 
 		{

@@ -20,9 +20,15 @@ class CMGuestbook extends CObject implements ISQL, IModule
 	{
 		$queries = array
 		(
+<<<<<<< HEAD
 			'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (`id` INTEGER PRIMARY KEY AUTO_INCREMENT, `entry` TEXT, `created` TIMESTAMP default NOW());",
 			'insert into guestbook'   => 'INSERT INTO Guestbook (`entry`) VALUES (?);',
 			'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY `id` DESC;',
+=======
+			'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME default (datetime('now')));",
+			'insert into guestbook'   => 'INSERT INTO Guestbook (entry) VALUES (?);',
+			'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id DESC;',
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 			'delete from guestbook'   => 'DELETE FROM Guestbook;',
 		);
 		

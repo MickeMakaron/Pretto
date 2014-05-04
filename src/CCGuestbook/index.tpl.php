@@ -1,5 +1,9 @@
 <h1>Guestbook Example</h1>
+<<<<<<< HEAD
 <p>Showing off how to implement a guestbook in Pretto. Now saving to database.</p>
+=======
+<p>Showing off how to implement a guestbook in Lydia. Now saving to database.</p>
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 
 <form action="<?=$formAction?>" method='post'>
 	<p>

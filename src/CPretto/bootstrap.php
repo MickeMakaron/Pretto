@@ -86,6 +86,7 @@ function bbcode2html($text)
 		'<a href="$1">$2</a>'
 	);     
 	return preg_replace($search, $replace, $text);
+<<<<<<< HEAD
 }
 
 
@@ -116,4 +117,6 @@ function findAndReplaceKey(&$array, $search, $replace)
 	}
 	
 	return false;
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 }

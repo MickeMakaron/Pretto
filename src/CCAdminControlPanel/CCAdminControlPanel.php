@@ -6,6 +6,7 @@
 */
 class CCAdminControlPanel extends CObject implements IController 
 {
+<<<<<<< HEAD
 	/**
 	* A section can contain several config variables.
 	* This array indicates where variables will be shown when edited.
@@ -31,6 +32,11 @@ class CCAdminControlPanel extends CObject implements IController
 			'menus' => array('name' => 'Menus', 'variables' => array('menus' => arra),
 			'controllers' => array('name' => 'Controllers', 'variables' => array('controllers' => 'Controllers')),
 		);*/
+=======
+	public function __construct() 
+	{
+		parent::__construct();
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	}
 
 
@@ -39,6 +45,7 @@ class CCAdminControlPanel extends CObject implements IController
 	*/
 	public function index() 
 	{
+<<<<<<< HEAD
 		$this->adminCheck();
 		
 		$config = new CMConfig();
@@ -274,4 +281,11 @@ class CCAdminControlPanel extends CObject implements IController
 		$this->redirectToControllerMethod();
 	}
 	
+=======
+		$this->views->setTitle('ACP: Admin Control Panel');
+		$this->views->addInclude(__DIR__ . '/index.tpl.php');
+	}
+
+
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 } 

@@ -68,7 +68,10 @@ class CFormElement implements ArrayAccess
 		$onlyValue 		= isset($this['value']) ? htmlentities($this['value'], ENT_COMPAT, $this->characterEncoding) : null;
 		$appendNewline	= isset($this['appendNewline']) ? ($this['appendNewline'] ? "</p>\n" : null) : "</p>\n"; 
 		$prependNewline	= isset($this['prependNewline']) ? ($this['prependNewline'] ? "<p>" : null) : "<p>";
+<<<<<<< HEAD
 		$checked 		= isset($this['value']) && $this['value'] ? "checked" : null;
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 
 		$messages = null;
 		if(isset($this['validation_messages'])) 
@@ -84,14 +87,21 @@ class CFormElement implements ArrayAccess
 			return "{$prependNewline}<input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$appendNewline}";
 		elseif($type && $this['type'] == 'textarea')
 			return "{$prependNewline}<label for='$id'>$label</label><br><textarea id='$id'{$type}{$class}{$name}{$autofocus}{$readonly}>{$onlyValue}</textarea>{$appendNewline}";
+<<<<<<< HEAD
 		elseif($type && $this['type'] == 'checkbox')
 			return "{$prependNewline}<label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$autofocus}{$readonly}{$checked}>{$appendNewline}";
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		elseif($type && $this['type'] == 'hidden')
 			return "<input id='$id'{$type}{$class}{$name}{$value} />\n";
 		else
 			return "{$prependNewline}<label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$messages}{$appendNewline}";	    
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	/**
 	* Use the element name as label if label is not set.
 	*/

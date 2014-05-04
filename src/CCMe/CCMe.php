@@ -17,6 +17,7 @@ class CCMe extends CObject implements IController
 		parent::__construct(); 
 
 		$this->config['theme']['name'] = 'HTML5Boilerplate';
+<<<<<<< HEAD
 		$this->config['theme']['path'] = 'themes/HTML5Boilerplate';
 		$this->config['theme']['stylesheet'] = 'style.css';
 		$this->config['theme']['template_file'] = 'default.tpl.php';
@@ -26,6 +27,12 @@ class CCMe extends CObject implements IController
 		$this->config['theme']['data']['meta_description'] = "Meeee";
 		$this->config['theme']['data']['style'] = null;
 
+=======
+		$this->config['theme']['stylesheet'] = 'style.css';
+		$this->data['style'] = null;
+		unset($this->config['theme']['template_file']);
+		$this->data['title'] = "Min me-sida";
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		
 		$this->data['above'] = CNav::fromDir(realpath("../"), "nav-kmom");
 		

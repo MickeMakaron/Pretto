@@ -128,6 +128,10 @@ EOD;
 							$res['validates'] = false;
 						}
 					}
+<<<<<<< HEAD
+=======
+					
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 					if(isset($element['callback']) && $res['validates']) 
 					{
 						$res['callback'] = $element['callback'][1];

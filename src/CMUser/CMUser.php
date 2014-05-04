@@ -63,11 +63,17 @@ class CMUser extends CObject implements ISQL, ArrayAccess, IModule
 			'drop table user' => "DROP TABLE IF EXISTS User;",
 			'drop table group' => "DROP TABLE IF EXISTS Groups;",
 			'drop table user2group' => "DROP TABLE IF EXISTS User2Groups;",
+<<<<<<< HEAD
 			//'create table user' => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
 			'create table user' => "CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTO_INCREMENT, acronym TEXT, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created TIMESTAMP default NOW(), updated TIMESTAMP);",
 			'create table group' => "CREATE TABLE IF NOT EXISTS Groups(id INTEGER PRIMARY KEY AUTO_INCREMENT, acronym VARCHAR(255), name TEXT, created TIMESTAMP default NOW(), updated TIMESTAMP);",
 			//'create table group' => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
 			'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created TIMESTAMP default NOW(), PRIMARY KEY(idUser, idGroups));",
+=======
+			'create table user' => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+			'create table group' => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+			'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 			'insert into user' => 'INSERT INTO User (acronym,name,email,algorithm,salt,password) VALUES (?,?,?,?,?,?);',
 			'insert into group' => 'INSERT INTO Groups (acronym,name) VALUES (?,?);',
 			'insert into user2group' => 'INSERT INTO User2Groups (idUser,idGroups) VALUES (?,?);',

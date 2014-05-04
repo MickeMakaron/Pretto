@@ -1,5 +1,13 @@
 <?php
 /**
+* Helpers for the template file.
+*/
+$pr->data['header'] = isset($pr->data['header']) ? $pr->data['header'] : null;
+$pr->data['main'] = isset($pr->data['main']) ? $pr->data['main'] : null;
+$pr->data['footer'] = "<p>Footer: &copy; Pretto | 		<a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a></p>";
+
+
+/**
 * Print debug information from the framework.
 */
 function get_debug() 
@@ -43,28 +51,11 @@ function get_debug()
 
 /**
 * Render all views.
-*
-* @param $region string the region to draw the content in.
 */
-function render_views($region = 'default') 
+function render_views() 
 {
-	return CPretto::instance()->views->render($region);
+	return CPretto::instance()->views->render();
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
-/**
-* Check if region has views. Accepts variable amount of arguments as regions.
-*
-* @param $region string the region to draw the content in.
-*/
-function region_has_content($region = 'default' /*...*/) 
-{
-	return CPretto::instance()->views->regionHasView(func_get_args());
-}
-
 
 /**
 * Get messages stored in flash-session.
@@ -84,31 +75,11 @@ function get_messages_from_session()
 	return $html;
 }
 
-<<<<<<< HEAD
-function get_messages()
-{
-	$data = CPretto::instance()->data;
-	
-	$messages = isset($data['messages']) ? $data['messages'] : null;
-	$html = null;
-	if(!empty($messages)) 
-		foreach($messages as $val) 
-		{
-			$valid = array('info', 'notice', 'success', 'warning', 'error', 'alert');
-			$class = (in_array($val['type'], $valid)) ? $val['type'] : 'info';
-			$html .= "<div class='$class'>{$val['message']}</div>\n";
-		}
-	return $html;
-
-}
-
-=======
->>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 
 /**
 * Create a url by prepending the base_url.
 */
-function base_url($url = null) 
+function base_url($url) 
 {
 	return CPretto::instance()->request->base_url . trim($url, '/');
 }
@@ -132,43 +103,6 @@ function create_url($urlOrController = null, $method = null, $arguments = null)
 {
 	return CPretto::instance()->request->createUrl($urlOrController, $method, $arguments);
 }
-
-
-/**
-* Prepend the theme_url, which is the url to the current theme directory.
-*
-* @param $url string the url-part to prepend.
-* @returns string the absolute url.
-*/
-function theme_url($url) 
-{
-	return create_url(CPretto::instance()->themeUrl . "/{$url}");
-}
-
-
-/**
-* Prepend the theme_parent_url, which is the url to the parent theme directory.
-*
-* @param $url string the url-part to prepend.
-* @returns string the absolute url.
-*/
-function theme_parent_url($url) 
-{
-	return create_url(CPretto::instance()->themeParentUrl . "/{$url}");
-}
-
-
-/*
-* Create a url, appended by $arg if $arg is unique.
-*/
-function argument_unique($arg)
-{
-	$arg = trim($arg, '/');
-	$args = CPretto::instance()->request->arguments;
-	
-	return in_array($arg, $args) ? current_url() : create_url(current_url() . "/$arg");
-}
-
 
 /**
 * Login menu. Creates a menu which reflects if user is logged in or not.

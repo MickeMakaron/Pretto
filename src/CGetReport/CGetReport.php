@@ -19,7 +19,11 @@ class CGetReport
 			if(strpos($currentDir, $base))
 				$hasReachedThisMom = true;
 		
+<<<<<<< HEAD
 			if($hasReachedThisMom && is_file($kmom . "/{$base}_report.php"))
+=======
+			if($hasReachedThisMom)
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 				$html .= file_get_contents($kmom . "/{$base}_report.php");
 		}
 

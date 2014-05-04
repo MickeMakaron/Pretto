@@ -97,8 +97,12 @@ class CCUser extends CObject implements IController
 	*/
 	public function init() 
 	{
+<<<<<<< HEAD
 		$res = $this->user->manage('install');
 		$this->addMessage($res[0], $res[1]);
+=======
+		$this->user->init();
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		$this->redirectToController();
 	}
 

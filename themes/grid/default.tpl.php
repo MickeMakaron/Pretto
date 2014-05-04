@@ -18,7 +18,10 @@
 		
 		<div id="main" role="main">
 			<?=get_messages_from_session()?>
+<<<<<<< HEAD
 			<?=get_messages()?>
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 			<?=@$main?>
 			<?=render_views()?>
 			<?=get_debug()?>

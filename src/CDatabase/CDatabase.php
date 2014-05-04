@@ -4,12 +4,16 @@
 */
 class CDatabase
 {
+<<<<<<< HEAD
 	public $isConnected = null;
 
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	private $db = null;
 	private $stmt = null;
 	private static $numQueries = 0;
 	private static $queries = array();
+<<<<<<< HEAD
 	
 
 
@@ -37,6 +41,16 @@ class CDatabase
 		
 		return $db;
 	}
+=======
+
+
+	public function __construct($dsn, $username = null, $password = null, $driver_options = null) 
+	{
+		$this->db = new PDO($dsn, $username, $password, $driver_options);
+		$this->db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 
 	/**
 	* Set an attribute on the database
@@ -77,6 +91,7 @@ class CDatabase
 	* Execute a SQL-query and ignore the resultset.
 	*/
 	public function executeQuery($query, $params = array()) 
+<<<<<<< HEAD
 	{	
 		$this->stmt = $this->db->prepare($query);
 		self::$queries[] = $query;
@@ -86,6 +101,16 @@ class CDatabase
 	}
 
 	
+=======
+	{
+		$this->stmt = $this->db->prepare($query);
+		self::$queries[] = $query;
+		self::$numQueries++;
+		return $this->stmt->execute($params);
+	}
+
+
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	/**
 	* Return last insert id.
 	*/
@@ -102,6 +127,7 @@ class CDatabase
 	{
 		return is_null($this->stmt) ? $this->stmt : $this->stmt->rowCount();
 	}
+<<<<<<< HEAD
 	
 	/**
 	* Execute a select-query with arguments and return the resultset.
@@ -120,4 +146,6 @@ class CDatabase
 			return false;
 		};
 	}
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 }

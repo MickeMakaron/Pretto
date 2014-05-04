@@ -66,7 +66,11 @@ class CObject
 	* @param string method name the method, default is current method.
 	* @param $arguments string the extra arguments to send to the method
 	*/
+<<<<<<< HEAD
 	protected function redirectToControllerMethod($controller=null, $method=null, $args = null) 
+=======
+	protected function RedirectToControllerMethod($controller=null, $method=null, $args = null) 
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	{
 		$controller = is_null($controller) ? $this->request->controller : null;
 		$method = is_null($method) ? $this->request->method : null;	
@@ -75,6 +79,7 @@ class CObject
 	}
 	
 	/**
+<<<<<<< HEAD
 	* Redirect to a controller and method and args. Uses RedirectTo().
 	*
 	* @param string controller name the controller or null for current controller.
@@ -93,6 +98,8 @@ class CObject
 	
 	
 	/**
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 	* Save a message in the session. Uses $this->session->AddMessage()
 	*
 	* @param $type string the type of message, for example: notice, info, success, warning, error.
@@ -111,6 +118,7 @@ class CObject
 			
 		$this->session->addMessage($type, $message);
 	}
+<<<<<<< HEAD
 	
 	
 	/**
@@ -154,4 +162,6 @@ class CObject
 		$this->data['messages'][] = array('type' => $type, 'message' => $message);
 	}
 	
+=======
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 }  

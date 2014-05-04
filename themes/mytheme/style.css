@@ -1,6 +1,7 @@
 /**
 * Description: Sample theme for site which extends the Pretto grid-theme.
 */
+<<<<<<< HEAD
 
 @import url("../grid/style.css");
 
@@ -74,3 +75,14 @@ h1, h2, h3, h4, h5
 
 #navbar ul.menu li a.selected{background-color:#D0DCE1;border-bottom:none;}
 
+=======
+@import url(../grid/style.php);
+
+html{background-color:#FFE2B3;}
+body{background-color:#D0DCE1;}
+#outer-wrap-header{background-color:#FFE2B3;border-bottom:2px solid #FFCE80}
+#outer-wrap-footer{background-color:#FFE2B3}
+a{color:#436370}
+
+#navbar ul.menu li a.selected{background-color:#D0DCE1;border-bottom:none;}
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5

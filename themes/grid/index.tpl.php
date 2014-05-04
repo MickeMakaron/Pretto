@@ -25,6 +25,10 @@
 		</div>
 	</div>
 </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 <?php if(region_has_content('flash')): ?>
 	<div id='outer-wrap-flash'>
 		<div id='inner-wrap-flash'>
@@ -47,7 +51,11 @@
 
 <div id='outer-wrap-main'>
 	<div id='inner-wrap-main'>
+<<<<<<< HEAD
 		<div id='primary'><?=get_messages_from_session()?><?=get_messages()?><?=@$main?><?=render_views('primary')?><?=render_views()?></div>
+=======
+		<div id='primary'><?=get_messages_from_session()?><?=@$main?><?=render_views('primary')?><?=render_views()?></div>
+>>>>>>> cde02307ba9fcc0eee572ce426989519b30251e5
 		<div id='sidebar'><?=render_views('sidebar')?></div>
 	</div>
 </div>
