@@ -91,6 +91,7 @@ $pr->config['controllers'] = array
 */
 $pr->config['menus'] = array
 (
+	'navbar' => array()
 );
 
 /**

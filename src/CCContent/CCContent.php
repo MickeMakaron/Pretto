@@ -42,7 +42,7 @@ class CCContent extends CObject implements IController
 		$status = $form->check();
 		
 
-		if($status['callback'] == 'doSave')
+		if(isset($status['callback']) && $status['callback'] == 'doSave')
 		{
 			if($status['validates'] === false) 
 			{
@@ -52,7 +52,7 @@ class CCContent extends CObject implements IController
 			else if($status['validates'] === true)
 				$this->redirectToController('edit', $content['id']);
 		}
-		elseif($status['callback'] == 'doDelete')
+		elseif(isset($status['callback']) && $status['callback'] == 'doDelete')
 		{
 			if($status['validates'] === false) 
 			{

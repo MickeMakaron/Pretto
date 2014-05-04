@@ -20,6 +20,18 @@ If you want to return to index, simply press the logo or the site title.
 
 ----------------
 
+User panel
+---
+To log in. Press *login* in the top right corner and enter your login information. By default there are three users:
+* anonymous - you are classed as anonymous when not logged in
+* root (admin) - username:**root**, password:**root**
+* doe (user) - username:**doe**, password:**doe**
+
+#### Change user info
+When logged in, either press your username in the top right corner or go to *user/profile*. The fields are self-explanatory.
+
+-----
+
 Configuration:
 ---
 Pretto's settings are stored in *"site/config.php"*. Here follows instructions on how to edit some content of your website:
