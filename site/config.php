@@ -1,8 +1,19 @@
 <?php
 /**
 * Site configuration, this file is changed by user per site.
-*
+* NOTE: Some of these options will be overridden by CMConfig. See bottom of file.
+* Set variables that are allowed to be edited in-browser here:
 */
+$pr->config['allow_browser_access'] = true;
+
+
+$pr->config['editable_variables'] = array
+(
+	'menus' => array('editable' => true, 'insertion'=>array('navbar'=>array('insertionID' => array('label'=>'Label!','url'=>'URL!'))), 'variables' => array('label', 'url')),
+	'controllers' => array('editable' => true, 'variables' => array('enabled', 'class')),
+	'allow_browser_access' => array('editable' => true),
+	'theme' => array('editable' => true, 'variables' => array('header', 'slogan', 'favicon', 'logo', 'footer')),
+);
 
 
 /*
@@ -69,24 +80,20 @@ $pr->config['controllers'] = array
 	'blog'		=> array('enabled' => true,'class' => 'CCBlog'),
 	'theme'		=> array('enabled' => true,'class' => 'CCTheme'),
 	'modules'	=> array('enabled' => true,'class' => 'CCModules'),
-	'my'		=> array('enabled' => true,'class' => 'CCMyController')
+	'my'		=> array('enabled' => true,'class' => 'CCMyController'),
+	'install'	=> array('enabled' => true,'class' => 'CCInstall'),
 );
 
 /**
 * Define menus.
 *
-* Create hardcoded menus and map them to a theme region through $ly->config['theme'].
+* Create hardcoded menus and map them to a theme region through $pr->config['theme'].
 */
 $pr->config['menus'] = array
 (
 	'navbar' => array
 	(
-		'home'      => array('label'=>'Home', 		'url'=>''),
-		'modules'   => array('label'=>'Modules', 	'url'=>'modules'),
-		'guestbook' => array('label'=>'Guestbook',	'url'=>'guestbook'),
-		'content'   => array('label'=>'Content', 	'url'=>'content'),
-		'blog'      => array('label'=>'Blog', 		'url'=>'blog'),
-		'theme'		=> array('label'=>'Theme',		'url'=>'theme'),
+		 'index'      => array('label'=>'Index', 'url'=>''),
 	),
 );
 
@@ -156,16 +163,30 @@ $pr->config['theme'] = array
 			'logo' => 'pretto.jpg',
 			'logo_width'  => 80,
 			'logo_height' => 80,
-			'footer' => "<p>&copy; Pretto, self | <a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a></p>",
+			'footer' => "&copy; Pretto, self | <a href='http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance'>Unicorn</a>",
 		),
 );
 
+/**
+* Pretto database
+*/
+$pr->config['database']['config'] = 'db.php';
 
-/*
-* Database
-*
-**/
-$pr->config['database'][0]['dsn'] = 'sqlite:' . PRETTO_SITE_PATH . '/data/.ht.sqlite';
+include($pr->config['database']['config']);
+$pr->config['database'][0]['dsn']			= "{$driver}:host={$host};dbname={$db};";
+$pr->config['database'][0]['driver'] 		= $driver;
+$pr->config['database'][0]['host'] 			= $host;
+$pr->config['database'][0]['db'] 			= $db;
+$pr->config['database'][0]['user'] 			= $user;
+$pr->config['database'][0]['password'] 		= $password;
+
+
+$pr->config['database']['default']['driver'] = 'mysql';
+$pr->config['database']['default']['host'] = 'blu-ray.student.bth.se';
+$pr->config['database']['default']['db'] = 'mihe14';
+$pr->config['database']['default']['user'] = 'mihe14';
+$pr->config['database']['default']['password'] = '3!A?"Pz6';
+
 
 /**
 * Debug

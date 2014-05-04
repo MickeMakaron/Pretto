@@ -66,13 +66,31 @@ class CObject
 	* @param string method name the method, default is current method.
 	* @param $arguments string the extra arguments to send to the method
 	*/
-	protected function RedirectToControllerMethod($controller=null, $method=null, $args = null) 
+	protected function redirectToControllerMethod($controller=null, $method=null, $args = null) 
 	{
 		$controller = is_null($controller) ? $this->request->controller : null;
 		$method = is_null($method) ? $this->request->method : null;	
 		
 		$this->redirectTo($this->request->createUrl($controller, $method, $args));
 	}
+	
+	/**
+	* Redirect to a controller and method and args. Uses RedirectTo().
+	*
+	* @param string controller name the controller or null for current controller.
+	* @param string method name the method, default is current method.
+	* @param $arguments string the extra arguments to send to the method
+	*/
+	protected function redirectToControllerMethodArgs($controller=null, $method=null, $args = null) 
+	{
+		$controller = is_null($controller) ? $this->request->controller : null;
+		$method = is_null($method) ? $this->request->method : null;	
+		$args = is_null($args) ? $this->request->arguments : null;
+		
+		$this->redirectTo($this->request->createUrl($controller, $method, $args));
+	}
+	
+	
 	
 	/**
 	* Save a message in the session. Uses $this->session->AddMessage()
@@ -93,4 +111,47 @@ class CObject
 			
 		$this->session->addMessage($type, $message);
 	}
+	
+	
+	/**
+	* Create a message without saving to session.
+	* 
+	* @param $type string the type of message, for example: notice, info, success, warning, error.
+	* @param $message string the message.
+	* @param $alternative string the message if the $type is set to false, defaults to null.
+	* @return message in HTML.
+	*/
+	protected function createMessageHTML($type, $message, $alternative = null) 
+	{
+		if($type === false) 
+		{
+			$type = 'error';
+			$message = $alternative;
+		} 
+		else if($type === true)
+			$type = 'success';
+			
+		return "<div class='$type'>{$message}</div>\n";
+	}
+	
+	/**
+	* Create a message without saving to session.
+	* 
+	* @param $type string the type of message, for example: notice, info, success, warning, error.
+	* @param $message string the message.
+	* @param $alternative string the message if the $type is set to false, defaults to null.
+	*/
+	protected function createMessage($type, $message, $alternative = null) 
+	{
+		if($type === false) 
+		{
+			$type = 'error';
+			$message = $alternative;
+		} 
+		else if($type === true)
+			$type = 'success';
+			
+		$this->data['messages'][] = array('type' => $type, 'message' => $message);
+	}
+	
 }  

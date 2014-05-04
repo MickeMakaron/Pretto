@@ -128,7 +128,6 @@ EOD;
 							$res['validates'] = false;
 						}
 					}
-					
 					if(isset($element['callback']) && $res['validates']) 
 					{
 						$res['callback'] = $element['callback'][1];

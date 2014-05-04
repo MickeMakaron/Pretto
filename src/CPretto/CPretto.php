@@ -23,10 +23,18 @@ class CPretto implements ISingleton
 		// include the site specific config.php and create a ref to $ly to be used by config.php
 		$pr = &$this;
 		require(PRETTO_SITE_PATH.'/config.php');
+
 		
 		// Create a database object.
 		if(isset($this->config['database'][0]['dsn']))
-			$this->db = new CDatabase($this->config['database'][0]['dsn']);
+		{
+			$user = isset($this->config['database'][0]['user']) ? $this->config['database'][0]['user'] : null;
+			$password = isset($this->config['database'][0]['password']) ? $this->config['database'][0]['password'] : null;
+			$driver_options = isset($this->config['database'][0]['driver_options']) ? $this->config['database'][0]['driver_options'] : null;
+			
+
+			$this->db = CDatabase::instance($this->config['database'][0]['dsn'], $user, $password, $driver_options);
+		}
 			
 		// Create a container for all views and theme data
 		$this->views = new CViewContainer();
@@ -60,6 +68,19 @@ class CPretto implements ISingleton
 	*/
 	public function frontControllerRoute() 
 	{
+		$this->data = array();
+		// Override config settings with PrettoConfig table
+		if($this->db)
+		{
+			$cmconfig = new CMConfig();			
+			if($cmconfig->tableExists())
+				$cmconfigData = $cmconfig->getConfigData();
+				
+			if(isset($cmconfigData['allow_browser_access']) && ($cmconfigData['allow_browser_access'] && $this->config['allow_browser_access']))
+				$this->data = array_merge($this->data, $cmconfigData);
+		}
+		
+		
 		$this->data['debug']  = "REQUEST_URI - {$_SERVER['REQUEST_URI']}\n";
 		$this->data['debug'] .= "SCRIPT_NAME - {$_SERVER['SCRIPT_NAME']}\n";
 		
@@ -81,6 +102,7 @@ class CPretto implements ISingleton
 		if($controllerExists) 
 		{
 			$controllerEnabled	= ($this->config['controllers'][$controller]['enabled'] == true);
+			$controllerEnabled 	= isset($this->data['controllers'][$controller]['enabled']) ? $this->data['controllers'][$controller]['enabled'] : $controllerEnabled;
 			$className			= $this->config['controllers'][$controller]['class'];
 			$classExists		= class_exists($className);
 		}
@@ -123,7 +145,18 @@ class CPretto implements ISingleton
 		if(!isset($this->config['theme'])) 
 			return;
 		
-		
+		// Override config settings with PrettoConfig table
+		if($this->db)
+		{
+			$cmconfig = new CMConfig();			
+			if($cmconfig->tableExists())
+			{
+				$cmconfigData = $cmconfig->getConfigData();
+				
+			if(isset($cmconfigData['allow_browser_access']) && ($cmconfigData['allow_browser_access'] && $this->config['allow_browser_access']))
+				$this->config = array_merge($this->config, $cmconfigData);
+			}
+		}
 		
 		// Get the paths and settings for the theme
         $themePath  = PRETTO_INSTALL_PATH . '/' . $this->config['theme']['path'];
@@ -138,7 +171,7 @@ class CPretto implements ISingleton
 			$parentUrl  = $this->request->base_url . $this->config['theme']['parent'];
 		}
 
-        // Add stylesheet name to the $ly->data array
+        // Add stylesheet name to the $pr->data array
         $this->data['stylesheet'] = $this->config['theme']['stylesheet'];
 		
 		
@@ -178,7 +211,6 @@ class CPretto implements ISingleton
 		if(isset($this->config['theme']['data']))
 			extract($this->config['theme']['data']);
 
-		
 		// Execute the template file
 		$templateFile = (isset($this->config['theme']['template_file'])) ? $this->config['theme']['template_file'] : 'default.tpl.php';
 		
@@ -187,7 +219,7 @@ class CPretto implements ISingleton
 		elseif(is_file("{$parentPath}/{$templateFile}"))
 			include("{$parentPath}/{$templateFile}");
 		else 
-			throw new Exception('No such template file.');
+			throw new Exception("No such template file. Neither {$themePath}/{$templateFile} and {$parentPath}/{$templateFile} is valid.");
 	}
 	
 	/**
@@ -198,6 +230,7 @@ class CPretto implements ISingleton
 	*/
 	public function drawMenu($menu) 
 	{
+
 		$items = null;
 		if(isset($this->config['menus'][$menu])) 
 		{

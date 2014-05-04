@@ -18,7 +18,7 @@ class CCMe extends CObject implements IController
 
 		$this->config['theme']['name'] = 'HTML5Boilerplate';
 		$this->config['theme']['path'] = 'themes/HTML5Boilerplate';
-		$this->config['theme']['stylesheet'] = 'themes/HTML5Boilerplate/style.css';
+		$this->config['theme']['stylesheet'] = 'style.css';
 		$this->config['theme']['template_file'] = 'default.tpl.php';
 		$this->data['theme']['parent'] = null; 
 				

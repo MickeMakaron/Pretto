@@ -149,6 +149,10 @@ class CRequest
 
 		$url = trim($url, '/');
 		$method = empty($method) ? null : '/' . trim($method, '/');
+		
+		if(is_array($arguments))
+			$arguments = implode('/', $arguments);
+			
 		$arguments = empty($arguments) ? null : '/' . trim($arguments, '/');
 		
 		return $prepend . rtrim("$url$method$arguments", '/');

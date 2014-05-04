@@ -5,6 +5,7 @@
 define('ROOT_PATH', __DIR__);
 define('PRETTO_INSTALL_PATH', dirname(__FILE__));
 define('PRETTO_SITE_PATH', PRETTO_INSTALL_PATH . '/site');
+define('PRETTO_SEPARATOR', '_-_-_');
 
 require(PRETTO_INSTALL_PATH.'/src/CPretto/bootstrap.php');
 

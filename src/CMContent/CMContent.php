@@ -58,14 +58,14 @@ class CMContent extends CObject implements ISQL, ArrayAccess, IModule
 		$queries = array
 		(
 			'drop table content' => "DROP TABLE IF EXISTS Content;",
-			'create table content' => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, key TEXT KEY, type TEXT, title TEXT, data TEXT, filter TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
-			'insert content' => 'INSERT INTO Content (key,type,title,data,filter,idUser) VALUES (?,?,?,?,?,?);',
+			'create table content' => "CREATE TABLE IF NOT EXISTS Content (`id` INTEGER PRIMARY KEY AUTO_INCREMENT, `key` TEXT, `type` TEXT, `title` TEXT, `data` TEXT, `filter` TEXT, `idUser` INT, `created` TIMESTAMP default NOW(), `updated` TIMESTAMP, `deleted` TIMESTAMP, FOREIGN KEY(`idUser`) REFERENCES User(`id`));",
+			'insert content' => 'INSERT INTO Content (`key`,`type`,`title`,`data`,`filter`,`idUser`) VALUES (?,?,?,?,?,?);',
 			'select * by id' => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
 			'select * by key' => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=?;',
 			'select * by type' => "SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY {$order_by} {$order_order};",
 			'select *' => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
-			'update content' => "UPDATE Content SET key=?, type=?, title=?, data=?, filter=?, updated=datetime('now') WHERE id=?;",
-			'delete content' => "DELETE FROM Content WHERE id=?;",
+			'update content' => "UPDATE Content SET `key`=?, `type`=?, `title`=?, `data`=?, `filter`=?, `updated`=NOW() WHERE `id`=?;",
+			'delete content' => "DELETE FROM Content WHERE `id`=?;",
 		);
 		
 		if(!isset($queries[$key]))

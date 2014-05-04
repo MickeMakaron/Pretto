@@ -46,6 +46,22 @@ class CViewContainer
 		$this->data[$key] = $value;
 	}
 
+	/**
+	* Set any variable that should be available for the theme engine.
+	*
+	* @param $value string to be set as title.
+	*/
+	public function addVariable($region, $values = array()) 
+	{
+		$this->views[$region][] = array
+		(
+			'type' => 'include',
+			'file' => null,
+			'variables' => $values
+		
+		);
+	}
+	
 
 	/**
 	* Add a view as file to be included and optional variables.
@@ -105,7 +121,8 @@ class CViewContainer
 			{
 				case 'include': 
 					extract($view['variables']); 
-					include($view['file']); 
+					if(is_file($view['file']))
+						include($view['file']); 
 					break;
 				case 'string':  
 					extract($view['variables']); 

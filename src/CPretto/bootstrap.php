@@ -87,3 +87,33 @@ function bbcode2html($text)
 	);     
 	return preg_replace($search, $replace, $text);
 }
+
+
+/**
+*
+*
+*
+*
+*/
+function findAndReplaceKey(&$array, $search, $replace)
+{
+	if(isset($array[$search]))
+	{
+		$tmp = $array[$search];
+		unset($array[$search]);
+		$array[$replace] = $tmp;
+		
+		return true;
+	}
+	
+	foreach($array as &$i)
+	{
+		if(is_array($i))
+		{
+			if(findAndReplaceKey($i, $search, $replace))
+				return true;
+		}
+	}
+	
+	return false;
+}

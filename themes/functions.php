@@ -51,6 +51,7 @@ function render_views($region = 'default')
 	return CPretto::instance()->views->render($region);
 }
 
+
 /**
 * Check if region has views. Accepts variable amount of arguments as regions.
 *
@@ -78,6 +79,23 @@ function get_messages_from_session()
 		}
 		
 	return $html;
+}
+
+function get_messages()
+{
+	$data = CPretto::instance()->data;
+	
+	$messages = isset($data['messages']) ? $data['messages'] : null;
+	$html = null;
+	if(!empty($messages)) 
+		foreach($messages as $val) 
+		{
+			$valid = array('info', 'notice', 'success', 'warning', 'error', 'alert');
+			$class = (in_array($val['type'], $valid)) ? $val['type'] : 'info';
+			$html .= "<div class='$class'>{$val['message']}</div>\n";
+		}
+	return $html;
+
 }
 
 

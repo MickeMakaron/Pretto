@@ -18,6 +18,7 @@
 		
 		<div id="main" role="main">
 			<?=get_messages_from_session()?>
+			<?=get_messages()?>
 			<?=@$main?>
 			<?=render_views()?>
 			<?=get_debug()?>

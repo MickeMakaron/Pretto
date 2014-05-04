@@ -10,7 +10,7 @@
 	</thead>
 	
 	<tbody>
-		<?php foreach($modules as $module): ?>
+		<?php print_r($modules) foreach($modules as $module): ?>
 			<tr><td><?=$module['name']?></td><td><div class='<?=$module['result'][0]?>'><?=$module['result'][1]?></div></td></tr>
 		<?php endforeach; ?>
 	</tbody>
