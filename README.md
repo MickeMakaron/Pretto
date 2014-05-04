@@ -66,6 +66,26 @@ Note that the logo's and the favicon's paths are relative to the current theme's
 
 ----------------
 
+
+###Styling
+For example, to edit the color of the header and change the font, go to the current theme's folder (*themes/mytheme/* by default) and edit the *style.css* file.
+
+##### Changing the color of the header
+`#inner-wrap-header
+{
+	background-color:#ffffcc;
+}`
+
+#####Changing the font
+`body
+{
+	background-color:#cc6666;
+	font-family: Georgia,serif;
+}`
+
+
+------
+
 Configuration through the ACP:
 -----
 You can also configure Pretto through its Admin Control Panel (ACP) in the browser. When logged in as admin, you can configure the following:
