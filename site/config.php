@@ -91,10 +91,6 @@ $pr->config['controllers'] = array
 */
 $pr->config['menus'] = array
 (
-	'navbar' => array
-	(
-		 'index'      => array('label'=>'Index', 'url'=>''),
-	),
 );
 
 /**

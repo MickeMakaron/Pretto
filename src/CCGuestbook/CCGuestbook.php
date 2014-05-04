@@ -19,7 +19,7 @@ class CCGuestbook extends CObject implements IController
 	*/
 	public function index() 
 	{   
-		$this->views->setTitle('Lydia Guestbook Example');
+		$this->views->setTitle('Guestbook');
 		$this->views->addInclude
 		(
 			__DIR__ . '/index.tpl.php', 

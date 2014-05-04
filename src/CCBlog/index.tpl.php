@@ -1,10 +1,10 @@
 <h1>Blog</h1>
-<p>All blog-like list of all content with the type "post", <a href='<?=create_url("content")?>'>view all content</a>.</p>
+<a href='<?=create_url("content/create")?>'>Add post</a>.</p>
 
 <?php if($contents != null):?>
 	<?php foreach($contents as $val):?>
 		<hr>
-		<h2><?=esc($val['title'])?></h2>
+		<a href="<?=create_url("page/view/{$val['id']}")?>"><h2><?=esc($val['title'])?></h2></a>
 		<p class='smaller-text'><em>Posted on <?=$val['created']?> by <?=$val['owner']?></em></p>
 		<p><?=filter_data($val['data'], $val['filter'])?></p>
 		<p class='smaller-text silent'><a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a></p>

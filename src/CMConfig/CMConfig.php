@@ -156,9 +156,9 @@ class CMConfig extends CObject implements ISQL, ArrayAccess, IModule
 		(
 			'navbar' => array
 				(
-					'index' => array('label' => 'Home', 'url' => ''),
 					'blog' => array('label' => 'Blog', 'url' => 'blog'),
-					'guestbook' => array('label' => 'Guest book', 'url' => 'guestbook')
+					'guestbook' => array('label' => 'Guest book', 'url' => 'guestbook'),
+					'pages'		=> array('label' => 'Pages', 'url' => 'content')
 				),
 		);
 		$config['controllers'] = array

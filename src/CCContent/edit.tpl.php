@@ -20,5 +20,3 @@
 		Last updated at <?=$content['updated']?>.
 	<?php endif; ?>
 </em></p>
-
-<p><a href='<?=create_url('content')?>'>View all content</a></p>

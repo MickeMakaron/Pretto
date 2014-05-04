@@ -1,6 +1,4 @@
 <h1>Guestbook Example</h1>
-<p>Showing off how to implement a guestbook in Pretto. Now saving to database.</p>
-
 <form action="<?=$formAction?>" method='post'>
 	<p>
 		<label>Message: <br/>
